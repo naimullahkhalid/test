@@ -502,6 +502,8 @@
             if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
 
             const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
+            
+            // Dibaiki: Kalau kotak kosong/terpadam dalam Sheet, dia automatik jadi OFF
             const statusForm = (cols[9] && cols[9].trim() !== '') ? cols[9].toUpperCase().replace(/\s+/g, '') : 'OFF'; 
 
             if(statusCard.includes('ON')) {
@@ -521,34 +523,22 @@
         }
     }
 
-    function parseMainData(csvText) {
+    function parseStatsData(csvText) {
         const rows = csvToArray(csvText);
-        EVENT_METADATA = [];
+        GLOBAL_DATA = [];
+        const headers = rows[0];
 
-        for(let i=1; i<rows.length; i++) {
+        for (let i = 1; i < rows.length; i++) {
             const cols = rows[i];
+            if (cols.length < 3) continue;
             
-            if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
-
-            const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
-            
-            // Dibaiki: Kalau kotak kosong/terpadam dalam Sheet, dia automatik jadi OFF (Muzik Pop Solo)
-            const statusForm = (cols[9] && cols[9].trim() !== '') ? cols[9].toUpperCase().replace(/\s+/g, '') : 'OFF'; 
-
-            if(statusCard.includes('ON')) {
-                EVENT_METADATA.push({
-                    category: cols[0],
-                    sub: cols[1],
-                    title: cols[2],
-                    link_konsep: cols[3],
-                    date_close: cols[4],
-                    date_event: cols[5],
-                    phone_raw: cols[6],
-                    pic_name: cols[7],
-                    status_card: statusCard,
-                    status_form: statusForm 
-                });
-            }
+            GLOBAL_DATA.push({ 
+                event: cols[0].trim(), 
+                district: cols[1].trim().toUpperCase(), 
+                school: cols[2].trim().toUpperCase(), 
+                heads: headers,
+                full: cols 
+            });
         }
     }
 

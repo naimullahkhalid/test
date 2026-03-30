@@ -91,6 +91,7 @@
         .theme-tari { border-left-color: #a855f7; } .theme-tari .tag-cat { background: #f3e8ff; color: #6b21a8; }
         .theme-teater { border-left-color: #f97316; } .theme-teater .tag-cat { background: #ffedd5; color: #9a3412; }
         .theme-visual { border-left-color: #ec4899; } .theme-visual .tag-cat { background: #fce7f3; color: #9d174d; }
+        .theme-lain { border-left-color: #14b8a6; } .theme-lain .tag-cat { background: #ccfbf1; color: #0f766e; }
 
         .card-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
         .tag-group { display: flex; gap: 5px; }
@@ -112,6 +113,8 @@
         .pg-theme-tari .page-header-bg { background: linear-gradient(135deg, #a855f7, #c084fc); } .pg-theme-tari .page-icon-wrapper { color: #9333ea; }
         .pg-theme-teater .page-header-bg { background: linear-gradient(135deg, #f97316, #fb923c); } .pg-theme-teater .page-icon-wrapper { color: #ea580c; }
         .pg-theme-visual .page-header-bg { background: linear-gradient(135deg, #ec4899, #f472b6); } .pg-theme-visual .page-icon-wrapper { color: #db2777; }
+        .pg-theme-lain .page-header-bg { background: linear-gradient(135deg, #14b8a6, #2dd4bf); } .pg-theme-lain .page-icon-wrapper { color: #0f766e; }
+        
         .page-body { padding: 0 40px 40px 40px; }
         .page-title { font-size: 22px; font-weight: 800; color: #1e293b; margin: 0 0 10px 0; line-height: 1.3; }
         .page-stat-box { display: inline-flex; flex-direction: column; align-items: center; background: #f8fafc; padding: 15px 30px; border-radius: 16px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
@@ -316,7 +319,7 @@
                 <div class="admin-toolbar">
                     <div class="admin-flex-row">
                         <div class="admin-filters">
-                            <select id="filter_category" class="form-select" onchange="renderAdminSubOptions()"><option value="ALL">Semua Kategori</option><option value="MUZIK">Muzik</option><option value="TARI">Tari</option><option value="TEATER">Teater</option><option value="SENI VISUAL">Seni Visual</option></select>
+                            <select id="filter_category" class="form-select" onchange="renderAdminSubOptions()"><option value="ALL">Semua Kategori</option><option value="MUZIK">Muzik</option><option value="TARI">Tari</option><option value="TEATER">Teater</option><option value="SENI VISUAL">Seni Visual</option><option value="LAIN-LAIN">Lain-lain</option></select>
                             <select id="filter_sub" class="form-select" onchange="filterAdminData()"><option value="ALL">Semua Acara</option></select>
                             <select id="filter_district" class="form-select" onchange="filterAdminData()"><option value="">Semua Daerah</option><option value="BESUT">Besut</option><option value="MARANG">Marang</option><option value="KUALA NERUS">Kuala Nerus</option><option value="KUALA TERENGGANU">K. Terengganu</option><option value="HULU TERENGGANU">H. Terengganu</option><option value="SETIU">Setiu</option><option value="DUNGUN">Dungun</option><option value="KEMAMAN">Kemaman</option></select>
                         </div>
@@ -531,7 +534,8 @@
         const tabContainer = document.getElementById('public_tabs');
         
         tabContainer.innerHTML = "";
-        ["SEMUA", "MUZIK", "TARI", "TEATER", "SENI VISUAL"].forEach(cat => {
+        // Ditambah "LAIN-LAIN"
+        ["SEMUA", "MUZIK", "TARI", "TEATER", "SENI VISUAL", "LAIN-LAIN"].forEach(cat => {
             let btn = document.createElement('div'); btn.className = `filter-pill ${cat === activeCat ? 'active' : ''}`; btn.innerText = cat;
             btn.onclick = () => renderDashboardLayout(cat); tabContainer.appendChild(btn);
         });
@@ -552,6 +556,7 @@
             if(item.category === "TARI") themeClass = "theme-tari";
             if(item.category === "TEATER") themeClass = "theme-teater";
             if(item.category === "SENI VISUAL") themeClass = "theme-visual";
+            if(item.category === "LAIN-LAIN") themeClass = "theme-lain"; // Ditambah LAIN-LAIN
 
             // LOGIC HOMEPAGE: TULIS 'DITUTUP' JIKA BORANG OFF
             let isFormOpen = item.status_form === 'ON';
@@ -585,7 +590,6 @@
         document.getElementById('view_page').classList.remove('hidden');
         
         // --- URL MANAGEMENT (PUSH STATE) ---
-        // Ini yang buat URL bertukar jadi ?id=0, ?id=1
         const url = new URL(window.location);
         url.searchParams.set('id', idx);
         window.history.pushState({idx: idx}, '', url);
@@ -597,28 +601,78 @@
         if(d.category === "TARI") themeClass = "pg-theme-tari";
         if(d.category === "TEATER") themeClass = "pg-theme-teater";
         if(d.category === "SENI VISUAL") themeClass = "pg-theme-visual";
+        if(d.category === "LAIN-LAIN") themeClass = "pg-theme-lain"; // Ditambah LAIN-LAIN
         
         let phoneNum = cleanPhone(d.phone_raw);
-
-        // --- LOGIC NAMA PIC ---
-        let picName = d.pic_name && d.pic_name.trim() !== "" ? d.pic_name.split('\n')[0] : "Pegawai Bertugas"; // Ambil baris pertama je untuk WhatsApp
+        let picName = d.pic_name && d.pic_name.trim() !== "" ? d.pic_name.split('\n')[0] : "Pegawai Bertugas";
 
         // --- LOGIC BUTANG & STATUS ---
         let isFormOpen = d.status_form === 'ON';
         
-        // Setup Butang
         let actionVideo = isFormOpen ? `window.open('${LINK_DAFTAR_VIDEO}','_blank')` : `showToast('Harap Maaf, Pendaftaran Ditutup.')`;
         let actionGuru  = isFormOpen ? `window.open('${LINK_DAFTAR_GURU}','_blank')` : `showToast('Harap Maaf, Pendaftaran Ditutup.')`;
         let btnClass    = isFormOpen ? `act-reg` : `act-reg disabled`;
 
-        // Link WhatsApp Pintar
         let waMessage = encodeURIComponent(`Assalamualaikum Cikgu ${picName}, saya ingin bertanya mengenai pertandingan ${d.title}.`);
         let waLink = `https://wa.me/${phoneNum}?text=${waMessage}`;
 
-        // Label Tarikh
         let dateLabelHTML = isFormOpen 
             ? `<div class="kelip-kelip">🗓️ Tarikh Tutup: ${d.date_close}</div>`
             : `<div class="badge-closed">⛔ PENDAFTARAN DITUTUP</div>`;
+
+        // ==========================================================
+        // LOGIC KHAS: SEMAKAN PERTANDINGAN NGO / LAIN-LAIN
+        // ==========================================================
+        let isNGO = (d.category === "LAIN-LAIN") || d.title.toUpperCase().includes("NESTLE") || d.title.toUpperCase().includes("YAKULT");
+        
+        let penganjur = "PIHAK PENGANJUR";
+        if(d.title.toUpperCase().includes("NESTLE")) penganjur = "NESTLE KOKO KRUNCH";
+        else if(d.title.toUpperCase().includes("YAKULT")) penganjur = "YAKULT MALAYSIA";
+
+        let htmlButtons = "";
+        let htmlStats = "";
+
+        if (isNGO) {
+            // 1. PAPARAN KHAS NGO
+            htmlButtons = `
+                <div style="grid-column: 1 / -1; background:#fff1f2; border:1px dashed #f43f5e; padding:15px; border-radius:12px; margin-bottom:10px;">
+                    <div style="color:#e11d48; font-size:11px; font-weight:800; text-transform:uppercase; margin-bottom:5px;"><i class="fa-solid fa-triangle-exclamation"></i> Makluman</div>
+                    <div style="color:#9f1239; font-size:13px; font-weight:600;">SEMUA URUSAN PERTANDINGAN DIBAWAH ${penganjur}.</div>
+                </div>
+                <a href="${d.link_konsep}" target="_blank" class="btn-act act-info btn-span-full">
+                    <i class="fa-solid fa-circle-info"></i><span>Maklumat Pertandingan</span>
+                </a>
+                <a href="${waLink}" target="_blank" class="btn-act act-con btn-span-full">
+                    <i class="fa-brands fa-whatsapp"></i><span>Hubungi</span>
+                </a>
+            `;
+            htmlStats = ``; 
+        } else {
+            // 2. PAPARAN STANDARD KPM / JPNT
+            htmlStats = `
+                <div class="page-stat-box">
+                    <span class="page-stat-label">Penyertaan Terkini</span>
+                    <span class="page-stat-num">${count}</span>
+                </div>
+            `;
+            htmlButtons = `
+                <div onclick="${actionVideo}" class="btn-act ${btnClass}">
+                    <i class="fa-solid fa-pen-to-square"></i><span>Pendaftaran Video/Bahan</span>
+                </div>
+                <div onclick="${actionGuru}" class="btn-act ${btnClass}">
+                    <i class="fa-solid fa-user-tie"></i><span>Pendaftaran Peserta/Guru</span>
+                </div>
+                <a href="${d.link_konsep}" target="_blank" class="btn-act act-info">
+                    <i class="fa-regular fa-file-pdf"></i><span>Kertas Konsep</span>
+                </a>
+                <div class="btn-act act-ana" onclick="openAnalysis('${d.title}')">
+                    <i class="fa-solid fa-list-check"></i><span>Semakan Pendaftaran</span>
+                </div>
+                <a href="${waLink}" target="_blank" class="btn-act act-con btn-span-full">
+                    <i class="fa-brands fa-whatsapp"></i><span>Hubungi</span>
+                </a>
+            `;
+        }
 
         let html = `
             <div class="page-card ${themeClass}">
@@ -629,32 +683,10 @@
                     <h2 class="page-title">${d.title}</h2>
                     
                     ${dateLabelHTML}
+                    ${htmlStats}
 
-                    <div class="page-stat-box">
-                        <span class="page-stat-label">Penyertaan Terkini</span>
-                        <span class="page-stat-num">${count}</span>
-                    </div>
-                    
                     <div class="btn-act-grid">
-                        
-                        <div onclick="${actionVideo}" class="btn-act ${btnClass}">
-                            <i class="fa-solid fa-pen-to-square"></i><span>Pendaftaran Video/Bahan</span>
-                        </div>
-                        <div onclick="${actionGuru}" class="btn-act ${btnClass}">
-                            <i class="fa-solid fa-user-tie"></i><span>Pendaftaran Peserta/Guru</span>
-                        </div>
-
-                        <a href="${d.link_konsep}" target="_blank" class="btn-act act-info">
-                            <i class="fa-regular fa-file-pdf"></i><span>Kertas Konsep</span>
-                        </a>
-                        <div class="btn-act act-ana" onclick="openAnalysis('${d.title}')">
-                            <i class="fa-solid fa-list-check"></i><span>Semakan Pendaftaran</span>
-                        </div>
-                        
-                        <a href="${waLink}" target="_blank" class="btn-act act-con btn-span-full">
-                            <i class="fa-brands fa-whatsapp"></i><span>Hubungi</span>
-                        </a>
-
+                        ${htmlButtons}
                     </div>
                 </div>
             </div>`;

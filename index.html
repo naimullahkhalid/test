@@ -913,7 +913,21 @@
         document.body.appendChild(link);
         link.click();
     }
+// --- FUNGSI REFRESH DATA PINTAR ---
+    async function refreshData() {
+        const btn = document.getElementById('btn_refresh');
+        
+        // 1. Pusingkan ikon & keluar notifikasi
+        btn.innerHTML = '<i class="fa-solid fa-rotate-right fa-spin"></i>';
+        showToast("Sedang menyemak data terbaru...");
 
+        // 2. Tarik data baru dari Google Sheet secara senyap
+        await initSystem(); 
+
+        // 3. Berhentikan ikon & maklumkan dah siap
+        btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i>';
+        showToast("Data berjaya dikemaskini!");
+    }
     window.addEventListener('DOMContentLoaded', initSystem);
 </script>
 </body>

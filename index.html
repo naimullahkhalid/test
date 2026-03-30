@@ -502,7 +502,7 @@
             if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
 
             const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
-            const statusForm = cols[9] ? cols[9].toUpperCase().replace(/\s+/g, '') : 'ON'; 
+            const statusForm = (cols[9] && cols[9].trim() !== '') ? cols[9].toUpperCase().replace(/\s+/g, '') : 'OFF'; 
 
             if(statusCard.includes('ON')) {
                 EVENT_METADATA.push({

@@ -439,9 +439,13 @@
 
     async function initSystem() {
         try {
+            // Menggunakan getTime() dan paksa no-store
+            const timeStamp = new Date().getTime();
+            const fetchOptions = { cache: "no-store", pragma: "no-cache" };
+
             const [mainRes, statsRes] = await Promise.all([
-                fetch(CSV_MAIN_URL + "&v=" + Date.now()), // Anti-Cache Added
-                fetch(CSV_STATS_URL + "&v=" + Date.now())  // Anti-Cache Added
+                fetch(CSV_MAIN_URL + "&v=" + timeStamp, fetchOptions), 
+                fetch(CSV_STATS_URL + "&v=" + timeStamp, fetchOptions)
             ]);
 
             const mainText = await mainRes.text();

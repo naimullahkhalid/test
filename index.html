@@ -495,7 +495,9 @@
 
         for(let i=1; i<rows.length; i++) {
             const cols = rows[i];
-            if(cols.length < 3) continue;
+            
+            // HALANG BARIS KOSONG: Skip jika lajur tak cukup, ATAU tiada Tajuk Pertandingan (Kolum C)
+            if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
 
             // --- PEMBETULAN DI SINI UNTUK ISU SPACES ---
             const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';

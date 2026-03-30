@@ -55,7 +55,7 @@
         .btn-icon-circle:hover { background: #e2e8f0; color: var(--text-main); }
         .btn-pill-admin { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; }
         .btn-pill-admin:hover { background: #d1fae5; }
-        .container { max-width: 96%; margin: 0 auto; padding: 20px; min-height: 80vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; min-height: 80vh; }
         .hidden { display: none !important; }
 
         /* FOOTER COPYRIGHT */
@@ -81,33 +81,49 @@
         .stat-info .num { font-size: 36px; font-weight: 800; line-height: 1.2; margin-top: 5px; letter-spacing: -1px; }
         .stat-icon { font-size: 24px; opacity: 0.9; background: rgba(255,255,255,0.2); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
 
-        /* EVENT CARD */
+        /* EVENT LIST */
         .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; }
         .filter-pill { background: white; padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 600; color: #64748b; border: 1px solid #e2e8f0; cursor: pointer; white-space: nowrap; transition: 0.2s; }
         .filter-pill.active { background: var(--text-main); color: white; border-color: var(--text-main); }
 
-        .event-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .event-card { background: white; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; border-left: 6px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
-        .event-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: #cbd5e1; }
-        .event-card.closed { opacity: 0.75; filter: grayscale(1); background: #f8fafc; }
+        /* --- MODERN LIST VIEW (REPLACES GRID CARDS) --- */
+        .event-list-container { display: flex; flex-direction: column; gap: 12px; }
+        
+        .event-row { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .event-row:hover { border-color: #cbd5e1; box-shadow: 0 8px 15px rgba(0,0,0,0.04); transform: translateX(4px); }
+        
+        /* Kesan Malap Untuk Acara Ditutup */
+        .event-row.closed { opacity: 0.55; background: #f8fafc; filter: grayscale(0.8); }
+        .event-row.closed:hover { transform: none; box-shadow: 0 2px 4px rgba(0,0,0,0.01); border-color: #e2e8f0; }
 
-        .theme-muzik { border-left-color: #3b82f6; } .theme-muzik .tag-cat { background: #eff6ff; color: #1e40af; }
-        .theme-tari { border-left-color: #a855f7; } .theme-tari .tag-cat { background: #f3e8ff; color: #6b21a8; }
-        .theme-teater { border-left-color: #f97316; } .theme-teater .tag-cat { background: #ffedd5; color: #9a3412; }
-        .theme-visual { border-left-color: #ec4899; } .theme-visual .tag-cat { background: #fce7f3; color: #9d174d; }
-        .theme-lain { border-left-color: #14b8a6; } .theme-lain .tag-cat { background: #ccfbf1; color: #0f766e; }
+        .row-left { display: flex; align-items: center; gap: 18px; flex: 1; padding-right: 20px; }
+        .row-left .color-bar { width: 5px; height: 36px; border-radius: 10px; }
+        .row-info { display: flex; flex-direction: column; gap: 5px; }
+        .row-title { font-size: 14px; font-weight: 700; color: #1e293b; line-height: 1.3; }
+        .row-meta { display: flex; gap: 10px; align-items: center; }
+        .row-meta .tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .row-meta .sub-text { font-size: 11px; color: #94a3b8; font-weight: 500; }
 
-        .card-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
-        .tag-group { display: flex; gap: 5px; }
-        .tag { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; }
-        .tag-sub { background: #f1f5f9; color: #475569; }
-        .card-title { font-size: 15px; font-weight: 700; color: #334155; line-height: 1.4; margin-bottom: 20px; min-height: 42px; }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #f1f5f9; }
+        .row-right { display: flex; align-items: center; gap: 15px; }
+        .row-count { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #475569; background: #f1f5f9; padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .row-status { font-size: 11px; font-weight: 800; padding: 8px 16px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; width: 85px; text-align: center; }
 
-        .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #dc2626; transition: 0.3s; }
-        .status-dot.active { background: #22c55e; box-shadow: 0 0 0 3px #dcfce7; animation: kelip 1.5s infinite ease-in-out; }
+        .status-buka { background: #ecfdf5; color: #059669; box-shadow: inset 0 0 0 1px #a7f3d0; }
+        .status-tutup { background: #fef2f2; color: #dc2626; box-shadow: inset 0 0 0 1px #fecaca; }
 
-        .count-badge { background: #f8fafc; color: #64748b; font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 600; display: flex; align-items: center; gap: 6px; border: 1px solid #e2e8f0; }
+        /* Tema Warna untuk Baris */
+        .theme-muzik .color-bar { background: #3b82f6; } .theme-muzik .tag { background: #eff6ff; color: #1e40af; }
+        .theme-tari .color-bar { background: #a855f7; } .theme-tari .tag { background: #f3e8ff; color: #6b21a8; }
+        .theme-teater .color-bar { background: #f97316; } .theme-teater .tag { background: #ffedd5; color: #9a3412; }
+        .theme-visual .color-bar { background: #ec4899; } .theme-visual .tag { background: #fce7f3; color: #9d174d; }
+        .theme-lain .color-bar { background: #14b8a6; } .theme-lain .tag { background: #ccfbf1; color: #0f766e; }
+
+        @media (max-width: 768px) {
+            .event-row { flex-direction: column; align-items: flex-start; gap: 15px; padding: 15px; }
+            .row-right { width: 100%; justify-content: space-between; flex-direction: row-reverse; }
+            .row-left { padding-right: 0; }
+            .row-left .color-bar { height: auto; align-self: stretch; }
+        }
 
         /* PAGE VIEW */
         .page-card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center; }
@@ -298,7 +314,7 @@
 
             <div class="filter-scroll" id="public_tabs"></div>
             <div id="loading_overlay" style="text-align:center; padding:50px; color:#64748b;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuatkan data...</div>
-            <div id="grid_container" class="event-grid"></div>
+            <div id="grid_container" class="event-list-container"></div>
         </div>
 
         <div id="view_page" class="hidden">
@@ -559,6 +575,9 @@
             return;
         }
 
+        // Tukar class container utama supaya jadi list
+        grid.className = 'event-list-container';
+
         data.forEach((item, idx) => {
             let idxGlobal = EVENT_METADATA.indexOf(item);
             const count = GLOBAL_DATA.filter(row => isEventMatch(row.event, item.title)).length;
@@ -567,32 +586,35 @@
             if(item.category === "TARI") themeClass = "theme-tari";
             if(item.category === "TEATER") themeClass = "theme-teater";
             if(item.category === "SENI VISUAL") themeClass = "theme-visual";
-            if(item.category === "LAIN-LAIN") themeClass = "theme-lain"; // Ditambah LAIN-LAIN
+            if(item.category === "LAIN-LAIN") themeClass = "theme-lain"; 
 
-            // --- PEMBETULAN DI SINI UNTUK ISU 'ON' ---
+            // LOGIC HOMEPAGE: Semak Status ON/OFF
             let isFormOpen = item.status_form.includes('ON');
             let labelText = isFormOpen ? 'DIBUKA' : 'DITUTUP';
-            let labelColor = isFormOpen ? '#059669' : '#dc2626';
-            let dotClass = isFormOpen ? 'status-dot active' : 'status-dot';
+            let statusClass = isFormOpen ? 'status-buka' : 'status-tutup';
+            let closedClass = isFormOpen ? '' : 'closed'; // Ini untuk malapkan baris
 
-            let card = document.createElement('div'); 
-            card.className = `event-card ${themeClass}`; 
-            card.onclick = () => bukaPage(idxGlobal);
+            let row = document.createElement('div'); 
+            row.className = `event-row ${themeClass} ${closedClass}`; 
+            row.onclick = () => bukaPage(idxGlobal);
             
-            card.innerHTML = `
-                <div class="card-header">
-                    <div class="tag-group">
-                        <span class="tag tag-cat">${item.category}</span>
-                        <span class="tag tag-sub">${item.sub}</span>
+            row.innerHTML = `
+                <div class="row-left">
+                    <div class="color-bar"></div>
+                    <div class="row-info">
+                        <div class="row-title">${item.title}</div>
+                        <div class="row-meta">
+                            <span class="tag">${item.category}</span>
+                            ${item.sub && item.sub.trim() !== "" ? `<span class="sub-text">${item.sub}</span>` : ''}
+                        </div>
                     </div>
-                    <div class="${dotClass}"></div>
                 </div>
-                <div class="card-title">${item.title}</div>
-                <div class="card-footer">
-                    <div class="count-badge"><i class="fa-solid fa-user-group"></i> ${count}</div>
-                    <div style="font-size:11px; font-weight:700; color:${labelColor};">${labelText}</div>
+                <div class="row-right">
+                    <div class="row-count" title="Penyertaan Terkini"><i class="fa-solid fa-user-group"></i> ${count}</div>
+                    <div class="row-status ${statusClass}">${labelText}</div>
                 </div>`;
-            grid.appendChild(card);
+            
+            grid.appendChild(row);
         });
     }
 
@@ -718,8 +740,11 @@
     }
 
     function searchPublicEvents(val) {
-        let cards = document.querySelectorAll('.event-card');
-        cards.forEach(c => { c.style.display = c.innerText.toUpperCase().includes(val.toUpperCase()) ? "" : "none"; });
+        // Cari dalam baris list (bukan lagi kad)
+        let rows = document.querySelectorAll('.event-row');
+        rows.forEach(r => { 
+            r.style.display = r.innerText.toUpperCase().includes(val.toUpperCase()) ? "flex" : "none"; 
+        });
     }
 
     function openEventStats() {

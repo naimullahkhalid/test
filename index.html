@@ -497,11 +497,12 @@
             const cols = rows[i];
             if(cols.length < 3) continue;
 
-            const statusCard = cols[8] ? cols[8].toUpperCase().trim() : 'OFF';
-            const statusForm = cols[9] ? cols[9].toUpperCase().trim() : 'ON'; // Default ON kalau kosong
+            // --- PEMBETULAN DI SINI UNTUK ISU SPACES ---
+            const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
+            const statusForm = cols[9] ? cols[9].toUpperCase().replace(/\s+/g, '') : 'ON'; // Default ON kalau kosong
 
             // Hanya masukkan jika Status Kad = ON
-            if(statusCard === 'ON') {
+            if(statusCard.includes('ON')) {
                 EVENT_METADATA.push({
                     category: cols[0],
                     sub: cols[1],
@@ -566,8 +567,8 @@
             if(item.category === "SENI VISUAL") themeClass = "theme-visual";
             if(item.category === "LAIN-LAIN") themeClass = "theme-lain"; // Ditambah LAIN-LAIN
 
-            // LOGIC HOMEPAGE: TULIS 'DITUTUP' JIKA BORANG OFF
-            let isFormOpen = item.status_form === 'ON';
+            // --- PEMBETULAN DI SINI UNTUK ISU 'ON' ---
+            let isFormOpen = item.status_form.includes('ON');
             let labelText = isFormOpen ? 'DIBUKA' : 'DITUTUP';
             let labelColor = isFormOpen ? '#059669' : '#dc2626';
             let dotClass = isFormOpen ? 'status-dot active' : 'status-dot';
@@ -614,8 +615,8 @@
         let phoneNum = cleanPhone(d.phone_raw);
         let picName = d.pic_name && d.pic_name.trim() !== "" ? d.pic_name.split('\n')[0] : "Pegawai Bertugas";
 
-        // --- LOGIC BUTANG & STATUS ---
-        let isFormOpen = d.status_form === 'ON';
+        // --- PEMBETULAN DI SINI UNTUK ISU 'ON' ---
+        let isFormOpen = d.status_form.includes('ON');
         
         let actionVideo = isFormOpen ? `window.open('${LINK_DAFTAR_VIDEO}','_blank')` : `showToast('Harap Maaf, Pendaftaran Ditutup.')`;
         let actionGuru  = isFormOpen ? `window.open('${LINK_DAFTAR_GURU}','_blank')` : `showToast('Harap Maaf, Pendaftaran Ditutup.')`;
@@ -913,7 +914,8 @@
         document.body.appendChild(link);
         link.click();
     }
-// --- FUNGSI REFRESH DATA PINTAR ---
+
+    // --- FUNGSI REFRESH DATA PINTAR ---
     async function refreshData() {
         const btn = document.getElementById('btn_refresh');
         
@@ -928,6 +930,7 @@
         btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i>';
         showToast("Data berjaya dikemaskini!");
     }
+
     window.addEventListener('DOMContentLoaded', initSystem);
 </script>
 </body>

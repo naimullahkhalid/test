@@ -715,7 +715,8 @@
         document.getElementById('data_modal').style.display = 'flex';
         document.getElementById('data_modal_title').innerText = "Jadual Pertandingan";
         
-        let tableHeader = `<thead><tr><th width="5%">#</th><th>Nama Pertandingan</th><th width="25%">Tarikh Pertandingan</th></tr></thead>`;
+        // Header yang betul untuk Jadual Pertandingan
+        let tableHeader = `<tr><th width="5%">#</th><th>Maklumat Pertandingan</th><th width="25%">Tarikh & Status</th></tr>`;
 
         let tableBody = EVENT_METADATA.map((d, i) => {
             let tarikhGame = d.date_event && d.date_event.trim() !== "" ? d.date_event : "Akan Dimaklumkan";
@@ -723,25 +724,47 @@
             <tr>
                 <td data-label="#">${i + 1}</td>
                 <td data-label="ACARA">
-                    <div style="font-weight:700; font-size:14px; color:#1e293b; line-height:1.4;">${d.title}</div>
-                    <div style="margin-top:6px;"><span style="font-size:10px; font-weight:700; padding:3px 8px; background:#f1f5f9; border-radius:4px; color:#64748b; border:1px solid #e2e8f0;">${d.category}</span></div>
+                    <div style="font-weight:700; font-size:14px; color:#1e293b; line-height:1.4; margin-bottom:6px;">${d.title}</div>
+                    <div><span style="font-size:10px; font-weight:700; padding:4px 10px; background:#f1f5f9; border-radius:50px; color:#475569; border:1px solid #e2e8f0; letter-spacing:0.5px;"><i class="fa-solid fa-tag" style="margin-right:4px; opacity:0.7;"></i>${d.category}</span></div>
                 </td>
                 <td data-label="TARIKH">
-                    <div style="display:flex; align-items:center; gap:8px;"><i class="fa-regular fa-calendar" style="color:#0f766e;"></i><span style="font-weight:600; color:#0f766e;">${tarikhGame}</span></div>
+                    <span style="display:inline-flex; align-items:center; gap:6px; background:#f0fdf4; color:#166534; padding:6px 12px; border-radius:8px; font-size:12px; font-weight:600; border:1px solid #bbf7d0;"><i class="fa-regular fa-calendar-days"></i> ${tarikhGame}</span>
                 </td>
             </tr>`;
         }).join('');
 
         document.getElementById('modal_table').className = "modern-table"; 
-        document.getElementById('modal_table').innerHTML = tableHeader + `<tbody id="modal_tbody">${tableBody}</tbody>`;
+        document.getElementById('modal_thead').innerHTML = tableHeader;
+        document.getElementById('modal_tbody').innerHTML = tableBody;
         document.getElementById('modalSearch').value = ""; 
     }
 
     function openSchoolStats() {
         document.getElementById('data_modal').style.display = 'flex';
-        document.getElementById('data_modal_title').innerText = "Senarai Sekolah";
+        document.getElementById('data_modal_title').innerText = "Senarai Penyertaan Sekolah";
+        
+        // Header yang betul & dinamik khas untuk Senarai Sekolah
+        let tableHeader = `<tr><th width="5%">#</th><th width="40%">Sekolah & Daerah</th><th>Acara Disertai</th></tr>`;
+
         let sorted = [...GLOBAL_DATA].sort((a,b) => a.district.localeCompare(b.district) || a.school.localeCompare(b.school));
-        document.getElementById('modal_tbody').innerHTML = sorted.map((d, i) => `<tr><td data-label="#">${i+1}</td><td data-label="SEKOLAH" style="font-weight:600; color:#0f766e;">${d.school}</td><td data-label="DAERAH">${d.district}</td><td data-label="ACARA" style="font-size:11px; color:#64748b;">${d.event}</td></tr>`).join('');
+        
+        let tableBody = sorted.map((d, i) => `
+            <tr>
+                <td data-label="#">${i+1}</td>
+                <td data-label="SEKOLAH">
+                    <div style="font-weight:700; font-size:13px; color:#0f766e; margin-bottom:6px;"><i class="fa-solid fa-school" style="margin-right:6px; opacity:0.7;"></i>${d.school}</div>
+                    <div><span style="font-size:10px; font-weight:700; padding:3px 8px; background:#fff7ed; border-radius:4px; color:#ea580c; border:1px solid #ffedd5;"><i class="fa-solid fa-location-dot" style="margin-right:4px;"></i>${d.district}</span></div>
+                </td>
+                <td data-label="ACARA">
+                    <div style="font-size:12px; color:#475569; font-weight:500; line-height:1.5;"><i class="fa-solid fa-medal" style="margin-right:6px; color:#94a3b8;"></i>${d.event}</div>
+                </td>
+            </tr>
+        `).join('');
+
+        document.getElementById('modal_table').className = "modern-table"; 
+        document.getElementById('modal_thead').innerHTML = tableHeader;
+        document.getElementById('modal_tbody').innerHTML = tableBody;
+        document.getElementById('modalSearch').value = ""; 
     }
 
     let chartInstance;

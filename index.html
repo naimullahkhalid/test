@@ -521,22 +521,34 @@
         }
     }
 
-    function parseStatsData(csvText) {
+    function parseMainData(csvText) {
         const rows = csvToArray(csvText);
-        GLOBAL_DATA = [];
-        const headers = rows[0];
+        EVENT_METADATA = [];
 
-        for (let i = 1; i < rows.length; i++) {
+        for(let i=1; i<rows.length; i++) {
             const cols = rows[i];
-            if (cols.length < 3) continue;
             
-            GLOBAL_DATA.push({ 
-                event: cols[0].trim(), 
-                district: cols[1].trim().toUpperCase(), 
-                school: cols[2].trim().toUpperCase(), 
-                heads: headers,
-                full: cols 
-            });
+            if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
+
+            const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
+            
+            // Dibaiki: Kalau kotak kosong/terpadam dalam Sheet, dia automatik jadi OFF (Muzik Pop Solo)
+            const statusForm = (cols[9] && cols[9].trim() !== '') ? cols[9].toUpperCase().replace(/\s+/g, '') : 'OFF'; 
+
+            if(statusCard.includes('ON')) {
+                EVENT_METADATA.push({
+                    category: cols[0],
+                    sub: cols[1],
+                    title: cols[2],
+                    link_konsep: cols[3],
+                    date_close: cols[4],
+                    date_event: cols[5],
+                    phone_raw: cols[6],
+                    pic_name: cols[7],
+                    status_card: statusCard,
+                    status_form: statusForm 
+                });
+            }
         }
     }
 
@@ -552,17 +564,20 @@
 
         grid.innerHTML = "";
         
-        // Asingkan data ikut kategori
         let data = activeCat === "SEMUA" ? [...EVENT_METADATA] : EVENT_METADATA.filter(i => i.category === activeCat);
         
-        // FUNGSI BARU: Susun DIBUKA (ON) naik ke atas, DITUTUP turun ke bawah
+        // FUNGSI: Susun DIBUKA (ON) naik ke atas, DITUTUP turun ke bawah
         data.sort((a, b) => {
             let aOpen = a.status_form.includes('ON') ? 1 : 0;
             let bOpen = b.status_form.includes('ON') ? 1 : 0;
             return bOpen - aOpen; 
         });
         
+        // DIBAIKI: Kurungan dan return yang terhilang sebelum ni
         if(data.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#94a3b8;">Tiada acara dijumpai.</div>`;
+            return;
+        }
 
         data.forEach((item, idx) => {
             let idxGlobal = EVENT_METADATA.indexOf(item);
@@ -580,7 +595,6 @@
             let closedClass = isFormOpen ? '' : 'closed'; 
 
             let card = document.createElement('div'); 
-            // --- INI REKAAN KAD MINIMALIST BARU ---
             card.className = `event-card ${themeClass} ${closedClass}`; 
             card.onclick = () => bukaPage(idxGlobal);
             

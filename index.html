@@ -551,12 +551,18 @@
         });
 
         grid.innerHTML = "";
-        let data = activeCat === "SEMUA" ? EVENT_METADATA : EVENT_METADATA.filter(i => i.category === activeCat);
+        
+        // Asingkan data ikut kategori
+        let data = activeCat === "SEMUA" ? [...EVENT_METADATA] : EVENT_METADATA.filter(i => i.category === activeCat);
+        
+        // FUNGSI BARU: Susun DIBUKA (ON) naik ke atas, DITUTUP turun ke bawah
+        data.sort((a, b) => {
+            let aOpen = a.status_form.includes('ON') ? 1 : 0;
+            let bOpen = b.status_form.includes('ON') ? 1 : 0;
+            return bOpen - aOpen; 
+        });
         
         if(data.length === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#94a3b8;">Tiada acara dijumpai.</div>`;
-            return;
-        }
 
         data.forEach((item, idx) => {
             let idxGlobal = EVENT_METADATA.indexOf(item);

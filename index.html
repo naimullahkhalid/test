@@ -55,7 +55,7 @@
         .btn-icon-circle:hover { background: #e2e8f0; color: var(--text-main); }
         .btn-pill-admin { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; }
         .btn-pill-admin:hover { background: #d1fae5; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; min-height: 80vh; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 20px; min-height: 80vh; }
         .hidden { display: none !important; }
 
         /* FOOTER COPYRIGHT */
@@ -81,49 +81,68 @@
         .stat-info .num { font-size: 36px; font-weight: 800; line-height: 1.2; margin-top: 5px; letter-spacing: -1px; }
         .stat-icon { font-size: 24px; opacity: 0.9; background: rgba(255,255,255,0.2); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
 
-        /* EVENT LIST */
+        /* SCROLL FILTERS */
         .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; margin-bottom: 20px; scrollbar-width: none; }
         .filter-pill { background: white; padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 600; color: #64748b; border: 1px solid #e2e8f0; cursor: pointer; white-space: nowrap; transition: 0.2s; }
         .filter-pill.active { background: var(--text-main); color: white; border-color: var(--text-main); }
 
-        /* --- MODERN LIST VIEW (REPLACES GRID CARDS) --- */
-        .event-list-container { display: flex; flex-direction: column; gap: 12px; }
+        /* --- NEW MINIMALIST GRID CARDS --- */
+        .event-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
         
-        .event-row { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-        .event-row:hover { border-color: #cbd5e1; box-shadow: 0 8px 15px rgba(0,0,0,0.04); transform: translateX(4px); }
-        
-        /* Kesan Malap Untuk Acara Ditutup */
-        .event-row.closed { opacity: 0.55; background: #f8fafc; filter: grayscale(0.8); }
-        .event-row.closed:hover { transform: none; box-shadow: 0 2px 4px rgba(0,0,0,0.01); border-color: #e2e8f0; }
-
-        .row-left { display: flex; align-items: center; gap: 18px; flex: 1; padding-right: 20px; }
-        .row-left .color-bar { width: 5px; height: 36px; border-radius: 10px; }
-        .row-info { display: flex; flex-direction: column; gap: 5px; }
-        .row-title { font-size: 14px; font-weight: 700; color: #1e293b; line-height: 1.3; }
-        .row-meta { display: flex; gap: 10px; align-items: center; }
-        .row-meta .tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .row-meta .sub-text { font-size: 11px; color: #94a3b8; font-weight: 500; }
-
-        .row-right { display: flex; align-items: center; gap: 15px; }
-        .row-count { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #475569; background: #f1f5f9; padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; }
-        .row-status { font-size: 11px; font-weight: 800; padding: 8px 16px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; width: 85px; text-align: center; }
-
-        .status-buka { background: #ecfdf5; color: #059669; box-shadow: inset 0 0 0 1px #a7f3d0; }
-        .status-tutup { background: #fef2f2; color: #dc2626; box-shadow: inset 0 0 0 1px #fecaca; }
-
-        /* Tema Warna untuk Baris */
-        .theme-muzik .color-bar { background: #3b82f6; } .theme-muzik .tag { background: #eff6ff; color: #1e40af; }
-        .theme-tari .color-bar { background: #a855f7; } .theme-tari .tag { background: #f3e8ff; color: #6b21a8; }
-        .theme-teater .color-bar { background: #f97316; } .theme-teater .tag { background: #ffedd5; color: #9a3412; }
-        .theme-visual .color-bar { background: #ec4899; } .theme-visual .tag { background: #fce7f3; color: #9d174d; }
-        .theme-lain .color-bar { background: #14b8a6; } .theme-lain .tag { background: #ccfbf1; color: #0f766e; }
-
-        @media (max-width: 768px) {
-            .event-row { flex-direction: column; align-items: flex-start; gap: 15px; padding: 15px; }
-            .row-right { width: 100%; justify-content: space-between; flex-direction: row-reverse; }
-            .row-left { padding-right: 0; }
-            .row-left .color-bar { height: auto; align-self: stretch; }
+        .event-card {
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
         }
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+        .event-card.closed {
+            opacity: 0.55;
+            background: #f8fafc;
+            box-shadow: none;
+            filter: grayscale(0.6);
+        }
+        .event-card.closed:hover {
+            transform: none;
+            border-color: #e2e8f0;
+        }
+
+        .ec-top { display: flex; justify-content: space-between; align-items: center; }
+        .ec-tag { font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 50px; letter-spacing: 0.5px; text-transform: uppercase; }
+        
+        .ec-status { font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px;}
+        .ec-status.s-buka { color: #059669; }
+        .ec-status.s-tutup { color: #dc2626; }
+        .ec-status i { font-size: 8px; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+        .s-buka i { animation: pulse 2s infinite; }
+
+        .ec-title { font-size: 16px; font-weight: 700; color: #1e293b; line-height: 1.4; flex-grow: 1; margin-top: 5px; }
+        
+        .ec-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 18px; margin-top: 10px; }
+        .ec-count { font-size: 12px; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .ec-arrow { color: #cbd5e1; font-size: 14px; transition: transform 0.3s ease, color 0.3s ease; }
+        .event-card:hover .ec-arrow { color: #0f766e; transform: translateX(5px); }
+        .event-card.closed:hover .ec-arrow { transform: none; color: #cbd5e1; }
+
+        /* Color Themes for the Tag */
+        .theme-muzik .ec-tag { background: #eff6ff; color: #1d4ed8; }
+        .theme-tari .ec-tag { background: #f3e8ff; color: #7e22ce; }
+        .theme-teater .ec-tag { background: #ffedd5; color: #c2410c; }
+        .theme-visual .ec-tag { background: #fce7f3; color: #be185d; }
+        .theme-lain .ec-tag { background: #ccfbf1; color: #0f766e; }
+
 
         /* PAGE VIEW */
         .page-card { background: white; border-radius: 24px; border: 1px solid #e2e8f0; overflow: hidden; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: center; }
@@ -141,14 +160,12 @@
         .page-stat-num { font-size: 36px; font-weight: 800; color: #334155; line-height: 1; }
         .page-stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; margin-bottom: 5px; }
 
-        /* GRID BUTTONS (Updated for 2-2-1 layout) */
+        /* GRID BUTTONS */
         .btn-act-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .btn-act { padding: 25px; border-radius: 16px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; border: 1px solid transparent; transition: 0.2s; background: #fff; }
         .btn-act span { font-size: 14px; font-weight: 600; color: #475569; text-align: center; }
         .btn-act i { font-size: 28px; }
         .btn-act:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-
-        /* Span Full Width for the last item (Hubungi) */
         .btn-span-full { grid-column: 1 / -1; }
 
         .act-info { background: #eff6ff; color: #1e40af; border-color: #dbeafe; } .act-info i { color: #3b82f6; }
@@ -212,50 +229,25 @@
         /* 🔥 MOBILE FIXES YANG LEBIH KUAT 🔥 */
         @media (max-width: 900px) {
             .container { padding: 15px; }
-
-            /* HERO BANNER - PAKSA STACK */
-            .hero-banner { 
-                flex-direction: column !important; 
-                gap: 20px !important; 
-                text-align: center !important; 
-                align-items: stretch !important;
-                height: auto !important;
-            }
+            .hero-banner { flex-direction: column !important; gap: 20px !important; text-align: center !important; align-items: stretch !important; height: auto !important; }
             .hero-text h2 { font-size: 18px; }
-            .hero-actions { 
-                flex-direction: row; 
-                width: 100% !important; 
-                gap: 10px;
-            }
+            .hero-actions { flex-direction: row; width: 100% !important; gap: 10px; }
             .hero-search { width: 100% !important; margin: 0 !important; }
-
-            /* STATS GRID - PAKSA 1 COLUMN (MENEGAK) */
-            .stats-grid { 
-                grid-template-columns: 1fr !important; /* INI YANG MEMBUATKAN DIA MENEGAK */
-                gap: 15px !important; 
-            }
-
-            /* Admin & Table Responsive */
+            .stats-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
             .admin-flex-row { flex-direction: column; align-items: stretch; }
             .admin-filters { flex-direction: column; width: 100%; min-width: auto; }
             .form-select { max-width: none; width: 100%; }
             .admin-actions { flex-direction: column; width: 100%; gap: 10px; }
             .form-input { width: 100%; }
             .btn-primary, .btn-print, .btn-excel { width: 100%; justify-content: center; }
-
-            /* Mobile Table Card Style */
             .modern-table thead, .data-table thead { display: none; }
-            .modern-table, .modern-table tbody, .modern-table tr, .modern-table td,
-            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
-
+            .modern-table, .modern-table tbody, .modern-table tr, .modern-table td, .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
             .modern-table tr, .data-table tr { margin-bottom: 15px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); padding: 5px; }
             .modern-table td, .data-table td { padding: 10px 15px; text-align: left; border-bottom: 1px dashed #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
             .modern-table td:last-child, .data-table td:last-child { border-bottom: none; }
-
             .modern-table td::before, .data-table td::before { content: attr(data-label); font-weight: 700; font-size: 10px; color: #94a3b8; text-transform: uppercase; margin-right: 15px; min-width: 80px; }
             .modern-table td[data-label="ACARA"], .data-table td[data-label="ACARA"] { display: block; }
             .modern-table td[data-label="ACARA"]::before, .data-table td[data-label="ACARA"]::before { display: none; }
-
             .analysis-layout { flex-direction: column; height: auto; }
             .analysis-list { border-left: none; border-top: 1px solid #e2e8f0; height: 350px; }
             .page-body { padding: 0 20px 30px 20px; }
@@ -314,7 +306,7 @@
 
             <div class="filter-scroll" id="public_tabs"></div>
             <div id="loading_overlay" style="text-align:center; padding:50px; color:#64748b;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuatkan data...</div>
-            <div id="grid_container" class="event-list-container"></div>
+            <div id="grid_container" class="event-grid"></div>
         </div>
 
         <div id="view_page" class="hidden">
@@ -436,7 +428,6 @@
         return dataEvent.toUpperCase().trim() === cardTitle.toUpperCase().trim();
     }
 
-    // --- FUNGSI PARSE CSV ---
     function csvToArray(text) {
         let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
         for (l of text) {
@@ -455,7 +446,6 @@
 
     async function initSystem() {
         try {
-            // Menggunakan getTime() dan paksa no-store
             const timeStamp = new Date().getTime();
             const fetchOptions = { cache: "no-store", pragma: "no-cache" };
 
@@ -470,11 +460,9 @@
             parseMainData(mainText);
             parseStatsData(statsText);
 
-            // CHECK URL PARAMETER & OPEN CARD DIRECTLY
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get('id');
 
-            // Kalau ada ID, kita buka page terus. Kalau tak ada, kita render dashboard biasa.
             const uniqueSchools = new Set(GLOBAL_DATA.map(d => d.school.trim()));
             document.getElementById('total_events').innerText = EVENT_METADATA.length;
             document.getElementById('grand_total').innerText = GLOBAL_DATA.length;
@@ -494,14 +482,13 @@
         }
     }
 
-    // HANDLE BROWSER BACK BUTTON
     window.onpopstate = function(event) {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
         if(id !== null && EVENT_METADATA[id]) {
             bukaPage(id);
         } else {
-            bukaHome(); // Reset UI back to dashboard
+            bukaHome();
         }
     };
 
@@ -512,14 +499,11 @@
         for(let i=1; i<rows.length; i++) {
             const cols = rows[i];
             
-            // HALANG BARIS KOSONG: Skip jika lajur tak cukup, ATAU tiada Tajuk Pertandingan (Kolum C)
             if(cols.length < 3 || !cols[2] || cols[2].trim() === "") continue;
 
-            // --- PEMBETULAN DI SINI UNTUK ISU SPACES ---
             const statusCard = cols[8] ? cols[8].toUpperCase().replace(/\s+/g, '') : 'OFF';
-            const statusForm = cols[9] ? cols[9].toUpperCase().replace(/\s+/g, '') : 'ON'; // Default ON kalau kosong
+            const statusForm = cols[9] ? cols[9].toUpperCase().replace(/\s+/g, '') : 'ON'; 
 
-            // Hanya masukkan jika Status Kad = ON
             if(statusCard.includes('ON')) {
                 EVENT_METADATA.push({
                     category: cols[0],
@@ -561,7 +545,6 @@
         const tabContainer = document.getElementById('public_tabs');
         
         tabContainer.innerHTML = "";
-        // Ditambah "LAIN-LAIN"
         ["SEMUA", "MUZIK", "TARI", "TEATER", "SENI VISUAL", "LAIN-LAIN"].forEach(cat => {
             let btn = document.createElement('div'); btn.className = `filter-pill ${cat === activeCat ? 'active' : ''}`; btn.innerText = cat;
             btn.onclick = () => renderDashboardLayout(cat); tabContainer.appendChild(btn);
@@ -575,9 +558,6 @@
             return;
         }
 
-        // Tukar class container utama supaya jadi list
-        grid.className = 'event-list-container';
-
         data.forEach((item, idx) => {
             let idxGlobal = EVENT_METADATA.indexOf(item);
             const count = GLOBAL_DATA.filter(row => isEventMatch(row.event, item.title)).length;
@@ -588,33 +568,28 @@
             if(item.category === "SENI VISUAL") themeClass = "theme-visual";
             if(item.category === "LAIN-LAIN") themeClass = "theme-lain"; 
 
-            // LOGIC HOMEPAGE: Semak Status ON/OFF
             let isFormOpen = item.status_form.includes('ON');
             let labelText = isFormOpen ? 'DIBUKA' : 'DITUTUP';
-            let statusClass = isFormOpen ? 'status-buka' : 'status-tutup';
-            let closedClass = isFormOpen ? '' : 'closed'; // Ini untuk malapkan baris
+            let statusClass = isFormOpen ? 's-buka' : 's-tutup';
+            let closedClass = isFormOpen ? '' : 'closed'; 
 
-            let row = document.createElement('div'); 
-            row.className = `event-row ${themeClass} ${closedClass}`; 
-            row.onclick = () => bukaPage(idxGlobal);
+            let card = document.createElement('div'); 
+            // --- INI REKAAN KAD MINIMALIST BARU ---
+            card.className = `event-card ${themeClass} ${closedClass}`; 
+            card.onclick = () => bukaPage(idxGlobal);
             
-            row.innerHTML = `
-                <div class="row-left">
-                    <div class="color-bar"></div>
-                    <div class="row-info">
-                        <div class="row-title">${item.title}</div>
-                        <div class="row-meta">
-                            <span class="tag">${item.category}</span>
-                            ${item.sub && item.sub.trim() !== "" ? `<span class="sub-text">${item.sub}</span>` : ''}
-                        </div>
-                    </div>
+            card.innerHTML = `
+                <div class="ec-top">
+                    <span class="ec-tag">${item.category}</span>
+                    <span class="ec-status ${statusClass}"><i class="fa-solid fa-circle"></i> ${labelText}</span>
                 </div>
-                <div class="row-right">
-                    <div class="row-count" title="Penyertaan Terkini"><i class="fa-solid fa-user-group"></i> ${count}</div>
-                    <div class="row-status ${statusClass}">${labelText}</div>
+                <div class="ec-title">${item.title}</div>
+                <div class="ec-bottom">
+                    <div class="ec-count"><i class="fa-solid fa-users"></i> ${count} Penyertaan</div>
+                    <div class="ec-arrow"><i class="fa-solid fa-arrow-right"></i></div>
                 </div>`;
             
-            grid.appendChild(row);
+            grid.appendChild(card);
         });
     }
 
@@ -622,7 +597,6 @@
         document.getElementById('view_dashboard').classList.add('hidden');
         document.getElementById('view_page').classList.remove('hidden');
         
-        // --- URL MANAGEMENT (PUSH STATE) ---
         const url = new URL(window.location);
         url.searchParams.set('id', idx);
         window.history.pushState({idx: idx}, '', url);
@@ -634,12 +608,11 @@
         if(d.category === "TARI") themeClass = "pg-theme-tari";
         if(d.category === "TEATER") themeClass = "pg-theme-teater";
         if(d.category === "SENI VISUAL") themeClass = "pg-theme-visual";
-        if(d.category === "LAIN-LAIN") themeClass = "pg-theme-lain"; // Ditambah LAIN-LAIN
+        if(d.category === "LAIN-LAIN") themeClass = "pg-theme-lain";
         
         let phoneNum = cleanPhone(d.phone_raw);
         let picName = d.pic_name && d.pic_name.trim() !== "" ? d.pic_name.split('\n')[0] : "Pegawai Bertugas";
 
-        // --- PEMBETULAN DI SINI UNTUK ISU 'ON' ---
         let isFormOpen = d.status_form.includes('ON');
         
         let actionVideo = isFormOpen ? `window.open('${LINK_DAFTAR_VIDEO}','_blank')` : `showToast('Harap Maaf, Pendaftaran Ditutup.')`;
@@ -653,9 +626,6 @@
             ? `<div class="kelip-kelip">🗓️ Tarikh Tutup: ${d.date_close}</div>`
             : `<div class="badge-closed">⛔ PENDAFTARAN DITUTUP</div>`;
 
-        // ==========================================================
-        // LOGIC KHAS: SEMAKAN PERTANDINGAN NGO / LAIN-LAIN
-        // ==========================================================
         let isNGO = (d.category === "LAIN-LAIN") || d.title.toUpperCase().includes("NESTLE") || d.title.toUpperCase().includes("YAKULT");
         
         let penganjur = "PIHAK PENGANJUR";
@@ -666,7 +636,6 @@
         let htmlStats = "";
 
         if (isNGO) {
-            // 1. PAPARAN KHAS NGO
             htmlButtons = `
                 <div style="grid-column: 1 / -1; background:#fff1f2; border:1px dashed #f43f5e; padding:15px; border-radius:12px; margin-bottom:10px;">
                     <div style="color:#e11d48; font-size:11px; font-weight:800; text-transform:uppercase; margin-bottom:5px;"><i class="fa-solid fa-triangle-exclamation"></i> Makluman</div>
@@ -681,7 +650,6 @@
             `;
             htmlStats = ``; 
         } else {
-            // 2. PAPARAN STANDARD KPM / JPNT
             htmlStats = `
                 <div class="page-stat-box">
                     <span class="page-stat-label">Penyertaan Terkini</span>
@@ -733,25 +701,20 @@
         document.getElementById('view_page').classList.add('hidden');
         document.getElementById('view_admin').classList.add('hidden');
 
-        // RESET URL BILA BALIK HOME
         const url = new URL(window.location);
         url.searchParams.delete('id');
         window.history.pushState({}, '', url);
     }
 
     function searchPublicEvents(val) {
-        // Cari dalam baris list (bukan lagi kad)
-        let rows = document.querySelectorAll('.event-row');
-        rows.forEach(r => { 
-            r.style.display = r.innerText.toUpperCase().includes(val.toUpperCase()) ? "flex" : "none"; 
-        });
+        let cards = document.querySelectorAll('.event-card');
+        cards.forEach(c => { c.style.display = c.innerText.toUpperCase().includes(val.toUpperCase()) ? "" : "none"; });
     }
 
     function openEventStats() {
         document.getElementById('data_modal').style.display = 'flex';
         document.getElementById('data_modal_title').innerText = "Jadual Pertandingan";
         
-        // Header yang betul untuk Jadual Pertandingan
         let tableHeader = `<tr><th width="5%">#</th><th>Maklumat Pertandingan</th><th width="25%">Tarikh & Status</th></tr>`;
 
         let tableBody = EVENT_METADATA.map((d, i) => {
@@ -779,7 +742,6 @@
         document.getElementById('data_modal').style.display = 'flex';
         document.getElementById('data_modal_title').innerText = "Senarai Penyertaan Sekolah";
         
-        // Header yang betul & dinamik khas untuk Senarai Sekolah
         let tableHeader = `<tr><th width="5%">#</th><th width="40%">Sekolah & Daerah</th><th>Acara Disertai</th></tr>`;
 
         let sorted = [...GLOBAL_DATA].sort((a,b) => a.district.localeCompare(b.district) || a.school.localeCompare(b.school));
@@ -826,7 +788,6 @@
         for (let i = 0; i < tr.length; i++) { tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(input) > -1 ? "" : "none"; }
     }
 
-    // --- ADMIN LOGIC ---
     function bukaAdmin() { document.getElementById('view_dashboard').classList.add('hidden'); document.getElementById('view_page').classList.add('hidden'); document.getElementById('view_admin').classList.remove('hidden'); }
     const ALLOWED_ADMINS = ["naimullahkhalid@gmail.com", "g-35298209@moe-dl.edu.my", "g-37391443@moe-dl.edu.my"]; 
     function loginGoogle() { auth.signInWithPopup(provider).catch(e=>alert(e.message)); }
@@ -942,18 +903,11 @@
         link.click();
     }
 
-    // --- FUNGSI REFRESH DATA PINTAR ---
     async function refreshData() {
         const btn = document.getElementById('btn_refresh');
-        
-        // 1. Pusingkan ikon & keluar notifikasi
         btn.innerHTML = '<i class="fa-solid fa-rotate-right fa-spin"></i>';
         showToast("Sedang menyemak data terbaru...");
-
-        // 2. Tarik data baru dari Google Sheet secara senyap
         await initSystem(); 
-
-        // 3. Berhentikan ikon & maklumkan dah siap
         btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i>';
         showToast("Data berjaya dikemaskini!");
     }
